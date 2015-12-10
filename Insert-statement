@@ -1,0 +1,10 @@
+
+1.  INSERT ... SELECT Syntax Example
+ 
+INSERT INTO share_buy
+            (transaction_id, transaction_date, trading_id, price, quantity,
+             trading_code, sector_id)
+   SELECT transaction_id, transaction_date, trading_id, price, quantity,
+          trading_code, sector_id
+     FROM share_transaction
+    WHERE buysell = 'B'
