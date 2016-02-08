@@ -1,0 +1,32 @@
+How do you increase the performance of %LIKE operator? 
+
+The % placed after he search word can enable the use of index if one is specified in the index column. 
+This performs better than the other two ways of using % - before the search word OR before and after the search word.
+
+LIKE% works the fastest because it uses the index to search on the column provided an index is specified on the column. 
+Using % after LIKE, results in faster results.
+
+never user '%' before a seraching word 
+e.g '%TABLE%'  
+ 
+Always uses 'TABLE%' 
+
+
+The wildcard char % can be placed in one of three ways: 
+ 
+%searchwordhere%  
+searchwordhere%  
+%searchwordhere 
+ 
+The searchwordhere% is the fastest because it can use an index if one is specified on that column. 
+The other two %searchwordhere%, and %searchwordhere would never use the index even if one is specified and thus result in slow table scans.
+
+Indexing when using the SQL "like" clause can be tricky because the wildcard "%" operator can invalidate the index.  For example a last_name index would be OK with a "like 'SMI%'" query, but unusable with "like '%SMI%'.
+
+Solutions to this issue of a leading wildcard can be addressed in several ways::
+
+    Context indexes - You can use Oracle text indexes to remove full-table scans when using the LIKE operator.
+     
+    Index hint  - Laurent Schneider describes a procedure to replace the full-table scan with an index fast full scan using an index hint.
+     
+    Case insensitive searching - The new 10g release 2 feature for case insensitive searches.
