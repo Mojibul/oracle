@@ -1,0 +1,21 @@
+
+The following guidelines can be used while creating temporary tablespaces:
+
+•	 Create as many temp files as the number of instances in every temp tablespace. For example,
+in an eight-instance database, there should be at least eight temp files associated with every
+temporary tablespace. This strategy reduces the file header level locking issues dramatically.
+
+•	 While adding an instance to a database, increase the size of temporary tablespace. Also,
+increase the number of temp files in temporary tablespaces.
+
+•	 If an application component uses an excessive amount of temporary tablespace, then create
+a new user for that application component, create additional temporary tablespace, and use
+application affinity to keep that component to a node. This strategy reduces the ill effects
+associated with excessive extent caching and uncaching activities.
+
+
+sql script 
+
+select tablespace_name, INITIAL_EXTENT, NEXT_EXTENT
+ from dba_tablespaces
+where tablespace_name='TEMP';
