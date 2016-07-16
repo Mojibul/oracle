@@ -1,0 +1,27 @@
+Keep fewer indexes on critical, DML-intensive tables. Rows can be populated in any block of a heap table as long as
+there is sufficient free space in the block. However, index entries must be populated in a specific index block. If there
+are numerous indexes on a table, and if sessions modify the table from all instances, then index blocks can become
+hot blocks, leading to aggressive global cache activity. More indexes on a table increase the number of index blocks to
+modify during inserts/updates to indexed columns. This increased block activity directly translates to an increase in
+global cache activity.
+
+Bitmap indexes are suitable for read-mostly tables. Excessive DML activity on tables with bitmap indexes
+increases the size of bitmap indexes sharply and induces row-level locking contention. In a RAC database, bitmap
+index blocks are transferred between instances, exacerbating the symptoms further.
+
+In addition, the compressed index reduces the number of index blocks. This reduction is achieved by not storing
+repetitive values. Because the size of the compressed index is smaller than the uncompressed index, the number of
+buffers needed to support the indexes decreases, thereby reducing global cache activity.
+
+The following best-practice guidelines for indexing design are applicable to both single-instance databases and
+RAC databases:
+1. Reduce the number of indexes on DML-intensive tables. In many cases, a number of
+indexes can be reduced by rearranging the column in a specific order that matches the
+application requirement and by modifying the query slightly to match the index design.
+
+2. Avoid adding bitmap indexes on heavily modified tables. Performance issues will be
+localized to a few components in a single-instance database. However, in a RAC database
+this performance issue is magnified. I have personally witnessed complete application
+downtime due to a bitmap index on a DML-intensive table.
+
+3. Consider compressed indexes if the cardinality of the leading column is lower.
