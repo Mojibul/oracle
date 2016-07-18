@@ -1,3 +1,12 @@
+
+WHAT IS AUDITING?
+
+Auditing is the monitoring and recording of configured database actions, from both databases users and nondatabase users.
+
+Nondatabase users refers to application users who are recognized in the database using the CLIENT_IDENTIFIER attribute.
+
+
+
 In previous release of Oracle Database, there were separate audit trails for individual component:
 
 SYS.AUD$ for the database audit trail
@@ -13,3 +22,44 @@ As part of the unified audit trail enhancement, a new schema, AUDSYS will
 be used sollel for storage of the unified audit trail data table. the existing
 audit data in the AUD$ and FGA_LOG$ system tables, audit metadata, and audit 
 PL/SQL package, will continue to reside in the SYS schema.
+
+FINE graine auditing 
+
+CREATE TABLE  CBSMS.AUDITTEST ( id number (9))
+
+BEGIN
+  DBMS_FGA.ADD_POLICY(
+   object_schema      => 'CBSMS',
+   object_name        => 'AUDITTEST',
+   policy_name        => 'chk_hr_employees',
+   audit_column       => 'ID',
+   enable             =>  TRUE,
+   statement_types    => 'INSERT, UPDATE, SELECT, DELETE');
+END;
+
+SELECT *  FROM DBA_AUDIT_POLICIES;
+
+SELECT * FROM CBSMS.AUDITTEST
+INSERT INTO CBSMS.AUDITTEST VALUES(5)
+UPDATE  CBSMS.AUDITTEST set id = 2
+delete from CBSMS.AUDITTEST
+
+
+SELECT * FROM dba_fga_audit_trail
+SELECT TIMESTAMP,db_user,object_schema,object_name,policy_name,sql_text FROM DBA_FGA_AUDIT_TRAIL ORDER BY TIMESTAMP DESC;
+
+SELECT * FROM  SYS.FGA_LOG$
+SELECT * FROM SYS.AUD$ 
+
+
+SET serveroutput ON SIZE 999999
+BEGIN
+  IF DBMS_AUDIT_MGMT.IS_CLEANUP_INITIALIZED(DBMS_AUDIT_MGMT.AUDIT_TRAIL_DB_STD)
+  THEN
+    DBMS_output.put_line('True');
+  ELSE
+    DBMS_output.put_line('False');
+  END IF;
+END;
+
+ EXEC DBMS_AUDIT_MGMT.INIT_CLEANUP(DBMS_AUDIT_MGMT.AUDIT_TRAIL_DB_STD,1);
