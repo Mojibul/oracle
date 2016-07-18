@@ -1,0 +1,15 @@
+In previous release of Oracle Database, there were separate audit trails for individual component:
+
+SYS.AUD$ for the database audit trail
+SYS.FGA_LOG$ for find-grained auditing
+DVSYS.AUDIT_TRAILS$ for Oracle Database Vault, Oracle Label Security and so on.
+
+In this release, these audit trails are all unified into one, viewable from the UNIFIED_AUDIT_TRAIL data dictionary
+view for single-instance installations or Oracle Database Real Application Clusters environments.
+
+
+
+As part of the unified audit trail enhancement, a new schema, AUDSYS will 
+be used sollel for storage of the unified audit trail data table. the existing
+audit data in the AUD$ and FGA_LOG$ system tables, audit metadata, and audit 
+PL/SQL package, will continue to reside in the SYS schema.
