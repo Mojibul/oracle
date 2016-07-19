@@ -1,0 +1,34 @@
+You can connect specific node in Oracle RAC database .
+
+
+TNSNAMES.ORA
+-------------
+NODE2 =
+(DESCRIPTION =
+(ADDRESS_LIST =
+(ADDRESS = (PROTOCOL = TCP)(HOST = <VIP of Node2>)(PORT = 1521))
+)
+(CONNECT_DATA =
+(SERVICE_NAME = <Service_of_node2> or service_name)
+)
+)
+
+NODE1 =
+(DESCRIPTION =
+(ADDRESS_LIST =
+(ADDRESS = (PROTOCOL = TCP)(HOST = <VIP of Node1>)(PORT = 1521))
+)
+(CONNECT_DATA =
+(SERVICE_NAME = <Service_of_node1> OR service_Name)
+)
+)
+
+IF you have face any problem set up individual service on each node. 
+Call the service "Service_of_node1" on node1 and "Service_of_node2" on node2. 
+
+Used below script for verify the connected node
+
+select sys_context('userenv','instance_name')  
+FROM DUAL;
+
+
