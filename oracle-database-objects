@@ -1,0 +1,59 @@
+********************** ORACLE DATABASE OBJECT *******************************
+CREATED DATE : 13-NOV-2016
+CREATED BY   : MD MOJIBUL HOQUE
+UPDATED DATE :
+*****************************************************************************
+
+Oracle database has two types of objects. Schema objects and Nonschema objects.
+
+Schema
+
+A schema is a collection of logical strutures of data, or schema objects.
+
+Properties  of schema : 
+ 	1. A schema is a owned by a database user and has the same name as that user.
+	2. Each user own a single schema.
+	3. Schema objects can be created and manipulated with SQL.
+
+Schema objects :
+
+Clusters, 
+Constraints, 
+Database Links, 
+Database triggers, 
+Dimensions,
+External procedure libraries, 
+Index-Organized tables, 
+Index, 
+Indextypes,
+Java classes, 
+Java sources,  
+Meterialized views, 
+Materialized view logs,
+Object tables, 
+Object types, 
+Object views, 
+Operators, 
+Packages, 
+Sequences,
+Stored functions, 
+stored procedures, 
+Synonyms, 
+Tables 
+Views 
+
+Nonschema Objects :
+
+Other types of objects are also stored in the database and can be creaed and manipulated with SQL
+but are not contained in a schema:
+
+Contexts 
+Directories, 
+Parameter files (PFILES) and server parameter files (SPFILES)
+Profiles, 
+Roles, 
+Rollback segments, 
+Tablespaces
+Users
+
+Source: https://docs.oracle.com/cd/B19306_01/server.102/b14200/sql_elements007.htm
