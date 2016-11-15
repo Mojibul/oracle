@@ -1,0 +1,9 @@
+with
+    start_and_end ( start_date, end_date ) as (
+      select TO_DATE ('2003/04/01', 'yyyy/mm/dd'), TO_DATE ('2003/04/07', 'yyyy/mm/dd') from dual
+    )
+
+-- end of input data; actual solution begins below this line
+select start_date + level - 1 as dt
+from   start_and_end
+connect by level <= end_date - start_date + 1
