@@ -1,0 +1,12 @@
+Enable editing in linux follow the below procedure.
+
+STEP 1: 
+
+In SQL*Plus write 
+
+define_editor='vi'
+
+For fix it permanently you do this
+
+In case you want to make vi your permanent editor you have to write 
+"define _editor='vi'" into the file $ORACLE_HOME/sqlplus/admin/glogin.sql.
